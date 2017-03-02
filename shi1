@@ -1,0 +1,163 @@
+package Shi;
+import java.lang.*;
+import java.util.*;
+public class Shi2 {
+
+	public static Boolean chachong1(Zhengshu x,Zhengshu y){
+		if(x.a==y.a&&x.b==y.b&&x.c==y.c){
+			return true;
+		}
+		else if(x.b==y.b&&(x.b==1||x.b==3)){
+			if(x.a==y.c&&x.c==y.a) return true;
+			else return false;
+		}
+		else{return false;}
+	}
+	public static Boolean chachong2(Fenshu x,Fenshu y){
+		Fenshu xx=new Fenshu();
+		Fenshu yy=new Fenshu();
+		yy=yue(y);
+		xx=yue(x);
+		if(x.b==y.b){
+			if(x.b==1||x.b==3){
+				if(x.a==y.a&&x.c==y.c&&x.d==y.d&&x.e==y.e)return true;
+				else if(x.a==y.d&&x.c==y.e&&x.d==y.a&&x.e==y.c)return true;
+				else return false;
+					}
+			else {
+				if(x.a==y.a&&x.c==y.c&&x.d==y.d&&x.e==y.e)return true;
+				else return false;
+				}
+		}
+		else {return false;}
+	}
+	public static int zuidayin(int a,int b){
+		int c,d=1;
+		if(a<b){c=a;}
+		else{c=b;}
+		for(int i=2;i<=c;i++){
+			if(a%i==0&&b%i==0){
+				d=i;
+			}
+		}
+		return d;
+	}
+	public static void yuefen(int a,int b,int c,int d){
+		int aa=zuidayin(a,b);
+		c=a/aa;
+		d=b/aa;
+	}
+	public static Fenshu yue(Fenshu x){
+		Fenshu y=new Fenshu();
+		int a=x.a;
+		int b=x.b;
+		int c=x.c;
+		int d=x.d;
+		int e=x.e;
+		int a1=0,c1=0,d1=0,e1=0;
+		yuefen(a,d,a1,d1);
+		yuefen(c,e,c1,e1);
+		y.fu(a1,b,c1,d1,e1);
+		return y;
+	}
+	public static void main(String[] args) {
+		int shu=0,q=0;
+		Scanner input=new Scanner(System.in);
+		System.out.println("输入1、整数2、分数");
+		q=Integer.parseInt(input.next());
+		System.out.println("输入数量:");
+		shu=Integer.parseInt(input.next());
+		if(q==1){
+		Zhengshu cf[]=new Zhengshu [shu];
+		for(int i=0;i<shu;i++){
+			cf[i]=new Zhengshu();
+			boolean aa=true;
+			while(aa){
+				cf[i].zheng();
+				aa=false;
+				for(int j=0;j<i;j++){
+					if(chachong1(cf[i],cf[j])){
+						aa=true;
+						break;
+					}
+				}
+			}
+		}
+		for(int i=0;i<shu;i++){
+			cf[i].show();
+		}
+		}
+		else if(q==2){
+			Fenshu cf[]=new Fenshu [shu];
+			for(int i=0;i<shu;i++){
+				cf[i]=new Fenshu();
+				boolean aa=true;
+				while(aa){
+					cf[i].fen();
+					aa=false;
+					for(int j=0;j<i;j++){
+						if(chachong2(cf[i],cf[j])){
+							aa=true;
+							break;
+						}
+					}
+				}
+			}
+			for(int i=0;i<shu;i++){
+				cf[i].show();
+			}
+		}
+		else System.out.println("输入有误");
+		
+}
+}
+class Zhengshu{
+	int a;
+	int b;
+	int c;
+	public void zheng(){
+		a=(int)(Math.random()*100);
+		b=(int)(Math.random()*4+1);
+		c=(int)(Math.random()*100);
+		if(b==4&&c==0){
+			zheng();
+		}
+	}
+	public void show(){
+		String q;
+		if(b==1)q="+";
+		else if(b==2)q="-";
+		else if(b==3)q="*";
+		else q="/";
+		System.out.println(a+q+c+"=");
+	}
+}
+class Fenshu{
+	int a,b,c,d,e;
+	public void fu(int a1,int a2,int a3,int a4,int a5){
+		a=a1;
+		b=a2;
+		c=a3;
+		d=a4;
+		d=a5;
+	}
+	public void fen(){
+		a=(int)(Math.random()*100);
+		b=(int)(Math.random()*4+1);
+		c=(int)(Math.random()*100);
+		d=(int)(Math.random()*100);
+		e=(int)(Math.random()*100);
+		if(b==4&&c==0||d==0||e==0){
+			fen();
+		}
+	}
+	
+	public void show(){
+		String q;
+		if(b==1)q="+";
+		else if(b==2)q="-";
+		else if(b==3)q="*";
+		else q="/";
+		System.out.println("("+a+"/"+d+")"+q+"("+c+"/"+e+")=");
+	}
+}
